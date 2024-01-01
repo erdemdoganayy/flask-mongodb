@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  my-mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - my-network
+
+  my-flask-app:
+    build:
+      context: .
+    ports:
+      - "5000:5000"
+    depends_on:
+      - my-mongo
+    networks:
+      - my-network
+
+volumes:
+  mongo-data:
+
+networks:
+  my-network:
+
